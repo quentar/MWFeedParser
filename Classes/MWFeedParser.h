@@ -104,6 +104,10 @@ typedef enum { FeedTypeUnknown, FeedTypeRSS, FeedTypeRSS1, FeedTypeAtom } FeedTy
 	MWFeedItem *item;
 	MWFeedInfo *info;
 	
+    //additions to handle multiple parsers
+    int tag;
+    int storeItemsInside;
+    NSMutableArray * items;
 }
 
 #pragma mark Public Properties
@@ -125,6 +129,10 @@ typedef enum { FeedTypeUnknown, FeedTypeRSS, FeedTypeRSS1, FeedTypeAtom } FeedTy
 
 // Whether parsing is in progress
 @property (nonatomic, readonly, getter=isParsing) BOOL parsing;
+
+@property (assign) int tag;
+@property (assign) int storeItemsInside;
+@property (nonatomic,retain) NSMutableArray * items;
 
 #pragma mark Public Methods
 

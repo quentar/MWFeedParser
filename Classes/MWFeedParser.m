@@ -54,6 +54,7 @@
 @synthesize feedParseType, feedParser, currentPath, currentText, currentElementAttributes, item, info;
 @synthesize pathOfElementWithXHTMLType;
 @synthesize stopped, failed, parsing;
+@synthesize tag,storeItemsInside,items;
 
 #pragma mark -
 #pragma mark NSObject
@@ -109,6 +110,7 @@
 	[item release];
 	[info release];
 	[pathOfElementWithXHTMLType release];
+    [items release];
 	[super dealloc];
 }
 
@@ -130,6 +132,7 @@
 	parseStructureAsContent = NO;
 	self.pathOfElementWithXHTMLType = nil;
 	hasEncounteredItems = NO;
+    self.items=[[[NSMutableArray alloc]init ]autorelease];
 }
 
 // Parse using URL for backwards compatibility
@@ -828,6 +831,11 @@
 		// Debug log
 		MWLog(@"MWFeedParser: Feed item \"%@\" successfully parsed", item.title);
 		
+        //Store inside if set
+        if (storeItemsInside>0) {
+            [items addObject:item];
+        }
+        
 		// Inform delegate
 		if ([delegate respondsToSelector:@selector(feedParser:didParseFeedItem:)])
 			[delegate feedParser:self didParseFeedItem:[[item retain] autorelease]];
